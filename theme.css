@@ -1,0 +1,196 @@
+/**
+ * @name Reaper
+ * @author draingang764
+ * @version 1.0.0
+ * @description Sumuinen, harmaasävyinen teema: yksinäinen viikatemies kuolleella nummella.
+ * @source https://github.com/draingang764/grimreaper-good
+ * @website https://github.com/draingang764/grimreaper-good
+ */
+
+/* ---------- Muuttujat ---------- */
+:root {
+  /* Taustakuva: lataa GIF/kuva GitHub-repoon ja vaihda URL.
+     Jos et halua kuvaa, aseta arvoksi none. */
+  --reaper-bg-image: url("https://raw.githubusercontent.com/draingang764/grimreaper-good/main/reaper.gif");
+  --reaper-bg-opacity: 0.18;
+
+  /* Paletti kuvasta */
+  --reaper-void:    #0b0b0c;  /* siluetti */
+  --reaper-ground:  #141415;  /* maa */
+  --reaper-fog-1:   #1b1b1d;  /* tumma sumu */
+  --reaper-fog-2:   #242426;  /* sumu */
+  --reaper-fog-3:   #2f2f32;  /* kalpea taivas */
+  --reaper-ash:     #8a8a8e;  /* himmeä teksti */
+  --reaper-bone:    #d4d2cc;  /* luunvalkoinen teksti */
+  --reaper-blood:   #8c2f2f;  /* korostus, mainintojen väri */
+  --reaper-blood-hi:#b23a3a;
+}
+
+/* ---------- Discordin omat muuttujat ---------- */
+.theme-dark,
+.theme-darker,
+.theme-light {
+  /* Uudet muuttujat */
+  --background-base-lowest: var(--reaper-void);
+  --background-base-lower:  var(--reaper-ground);
+  --background-base-low:    var(--reaper-fog-1);
+  --background-surface-high: var(--reaper-fog-2);
+  --background-surface-higher: var(--reaper-fog-3);
+  --background-surface-highest: var(--reaper-fog-3);
+  --chat-background-default: transparent;
+
+  /* Vanhat muuttujat (yhteensopivuus) */
+  --background-primary: var(--reaper-fog-1);
+  --background-secondary: var(--reaper-ground);
+  --background-secondary-alt: var(--reaper-void);
+  --background-tertiary: var(--reaper-void);
+  --background-floating: var(--reaper-fog-2);
+  --background-accent: var(--reaper-fog-3);
+  --background-modifier-hover: rgba(212, 210, 204, 0.05);
+  --background-modifier-selected: rgba(212, 210, 204, 0.10);
+  --background-modifier-active: rgba(212, 210, 204, 0.14);
+  --background-modifier-accent: rgba(212, 210, 204, 0.08);
+  --channeltextarea-background: var(--reaper-ground);
+
+  /* Teksti */
+  --text-default: var(--reaper-bone);
+  --text-normal: var(--reaper-bone);
+  --text-strong: #ffffff;
+  --text-muted: var(--reaper-ash);
+  --text-secondary: var(--reaper-ash);
+  --header-primary: var(--reaper-bone);
+  --header-secondary: var(--reaper-ash);
+  --interactive-normal: var(--reaper-ash);
+  --interactive-hover: var(--reaper-bone);
+  --interactive-active: #ffffff;
+  --interactive-muted: #4a4a4e;
+  --channels-default: var(--reaper-ash);
+
+  /* Korostusvärit: harmaa brändi, punainen vain maininnoille */
+  --brand-500: #6d6d72;
+  --brand-560: #5d5d62;
+  --brand-600: #4f4f54;
+  --brand-experiment: #6d6d72;
+  --brand-experiment-560: #5d5d62;
+  --brand-experiment-600: #4f4f54;
+  --text-link: #b9b7b0;
+  --mention-foreground: var(--reaper-bone);
+  --mention-background: rgba(140, 47, 47, 0.30);
+  --scrollbar-thin-thumb: #3a3a3e;
+  --scrollbar-auto-thumb: #3a3a3e;
+  --scrollbar-auto-track: transparent;
+  --scrollbar-thin-track: transparent;
+}
+
+/* ---------- Taustakuva sumuna taustalla ---------- */
+body {
+  background: var(--reaper-void);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--reaper-bg-image) center / cover no-repeat;
+  opacity: var(--reaper-bg-opacity);
+  filter: grayscale(1) contrast(1.1);
+}
+
+#app-mount {
+  position: relative;
+  z-index: 1;
+}
+
+/* Vinjetti: tummuus reunoille */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Chat-alue läpikuultavaksi, jotta kuva häivähtää läpi */
+[class*="chatContent_"],
+[class*="chat_"] {
+  background: rgba(20, 20, 21, 0.80) !important;
+}
+
+/* ---------- Yksityiskohdat ---------- */
+
+/* Tarkat, kulmikkaat kulmat */
+[class*="messageContent_"] code,
+[class*="markup_"] code {
+  border-radius: 2px;
+}
+
+/* Koodilohkot */
+[class*="markup_"] pre code {
+  background: var(--reaper-void) !important;
+  border: 1px solid var(--reaper-fog-3);
+}
+
+/* Viestikenttä */
+[class*="channelTextArea_"] {
+  border: 1px solid var(--reaper-fog-3);
+  border-radius: 3px;
+}
+
+/* Mainintapalkki viestin vieressä */
+[class*="mentioned_"] {
+  background: rgba(140, 47, 47, 0.10) !important;
+}
+[class*="mentioned_"]::before {
+  background: var(--reaper-blood) !important;
+}
+
+/* Lukemattomat / ilmoituspallot punaisiksi */
+[class*="numberBadge_"],
+[class*="lowerBadge_"] {
+  background-color: var(--reaper-blood) !important;
+  color: #fff !important;
+}
+
+/* Valittu kanava */
+[class*="modeSelected_"] {
+  background: rgba(212, 210, 204, 0.10) !important;
+  border-left: 2px solid var(--reaper-bone);
+}
+
+/* Kuvat ja avatarit harmaasävyiksi, väri palaa hoverilla */
+[class*="avatar_"] img,
+[class*="icon_"] img {
+  filter: grayscale(0.85);
+  transition: filter 0.25s ease;
+}
+[class*="avatar_"]:hover img,
+[class*="icon_"]:hover img {
+  filter: grayscale(0);
+}
+
+/* Palvelinikonit */
+[class*="wrapper_"] [class*="icon_"] {
+  transition: filter 0.25s ease;
+}
+
+/* Scrollipalkit */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3a3e;
+  border-radius: 0;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Valinta */
+::selection {
+  background: var(--reaper-blood);
+  color: #fff;
+}
